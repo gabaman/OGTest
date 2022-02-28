@@ -16,6 +16,7 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+const std::string SourcePath = "/Users/stan/OGTest/OGResourse/";
 
 int uniformTest()
 {
@@ -52,7 +53,12 @@ int uniformTest()
 
     // build and compile our shader program
     // ------------------------------------
-    Shader ourShader("/Users/stan/OGResourse/OGMatrix/5.1.matrix.vs", "/Users/stan/OGResourse/OGMatrix/5.1.matrix.fs");
+//    std::string const& face = SourcePath + "OGMatrix/awesomeface.png";
+
+    std::string matrixVSPath = SourcePath + "OGMatrix/5.1.matrix.vs";
+    std::string matrixFSPath = SourcePath + "OGMatrix/5.1.matrix.fs";
+
+    Shader ourShader(matrixVSPath.c_str(), matrixFSPath.c_str());
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -105,7 +111,9 @@ int uniformTest()
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    unsigned char *data = stbi_load("/Users/stan/OGResourse/OGMatrix/awesomeface.png", &width, &height, &nrChannels, 0);
+   
+    std::string const& face = SourcePath + "OGMatrix/awesomeface.png";
+    unsigned char *data = stbi_load(face.c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -127,7 +135,8 @@ int uniformTest()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // load image, create texture and generate mipmaps
-    data = stbi_load("/Users/stan/OGResourse/OGMatrix/wall.jpg", &width, &height, &nrChannels, 0);
+    std::string wall = SourcePath + "OGMatrix/wall.jpg";
+    data = stbi_load(wall.c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
         // note that the awesomeface.png has transparency and thus an alpha channel, so make sure to tell OpenGL the data type is of GL_RGBA
